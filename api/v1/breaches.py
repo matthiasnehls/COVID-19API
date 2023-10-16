@@ -5,19 +5,19 @@ from app.core.jhu import JHU
 from app.Models.world_m import GlobalModel
 from app.Models.exception import BaseExceptionToJsonModel
 
-world = APIRouter()
+breaches= APIRouter()
 
 
-@world.get("/jhu/region/{alpha_3}", response_model=GlobalModel, responses={422: {"model": BaseExceptionToJsonModel}})
-async def get_country_status(alpha_3: str):
+@breaches.get("/search/{domain}", response_model=GlobalModel, responses={422: {"model": BaseExceptionToJsonModel}})
+async def start_search(domain: str):
     """There is a difference of 2 days in the data obtained from JHU CSSE COVID-19 Data."""
     jhu = JHU()
-    source = await jhu.fetch_country_status(alpha_3)
+    source = await jhu.fetch_country_status(domain)
     if source is None:
         raise APIException(
             status=False,
             system={
-                "message": f"The country with alpha_3: {alpha_3} does not exist in database",
+                "message": f"The country with alpha_3: {domain} does not exist in database",
                 "code": 422
             },
             source=None
