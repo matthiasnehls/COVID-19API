@@ -1,7 +1,6 @@
 version: '3.8'
 services:
     dgc-api-breaches:
-        image: docker.io/library/dgc-api-breaches
-        environment:
+        image: dgc-api-breaches
         ports:
             - "80:80"
